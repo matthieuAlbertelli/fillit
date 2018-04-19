@@ -1,26 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tetrimino.h                                        :+:      :+:    :+:   */
+/*   tetris_board.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: malberte <malberte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/19 14:43:38 by malberte          #+#    #+#             */
-/*   Updated: 2018/04/19 16:45:18 by malberte         ###   ########.fr       */
+/*   Created: 2018/04/19 14:14:46 by malberte          #+#    #+#             */
+/*   Updated: 2018/04/19 14:30:23 by malberte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TETRIMINO_H
-# define TETRIMINO_H
+#ifndef TETRIS_BOARD_H
+# define TETRIS_BOARD_H
 
-#include "tetrimino_pattern.h"
+#include <stdlib.h>
 
-typedef struct 	s_tetrimino
+#include "libft/libft.h"
+
+typedef struct 	s_tetris_board
 {
-	t_tetrimino_pattern *pattern;
-	int 				pos[2];
-}				t_tetrimino;
+	char	**board;
+	size_t 	height;
+	size_t	width;
+	t_list	*solution;
+}				t_tetris_board;
 
-t_tetrimino_pattern **ft_read_patterns(const char *file);
-
-# endif
+#endif
