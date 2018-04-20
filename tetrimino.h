@@ -6,14 +6,16 @@
 /*   By: malberte <malberte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 14:43:38 by malberte          #+#    #+#             */
-/*   Updated: 2018/04/19 16:45:18 by malberte         ###   ########.fr       */
+/*   Updated: 2018/04/20 22:44:16 by malberte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TETRIMINO_H
 # define TETRIMINO_H
 
-#include "tetrimino_pattern.h"
+# include "tetrimino_pattern.h"
+# define MAX_TETRIMINOS 26
+# define TETRIMINO_MAP_SIZE 20
 
 typedef struct 	s_tetrimino
 {
@@ -21,6 +23,6 @@ typedef struct 	s_tetrimino
 	int 				pos[2];
 }				t_tetrimino;
 
-t_tetrimino_pattern **ft_read_patterns(const char *file);
+t_tetrimino 	**ft_read_tetriminos(int *nb_tetri, const char *filename);
 
 # endif
