@@ -6,7 +6,7 @@
 /*   By: malberte <malberte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 20:21:50 by malberte          #+#    #+#             */
-/*   Updated: 2018/04/20 22:49:54 by malberte         ###   ########.fr       */
+/*   Updated: 2018/04/22 15:06:02 by malberte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ t_tetrimino_pattern **ft_read_patterns(const char *file)
 	return (patterns);
 }
 
-void ft_pattern(int **pos)
+void ft_pattern(int pos[NB_BLOCKS][2])
 {
 	int block;
 	int dimension;
@@ -107,13 +107,21 @@ void ft_pattern(int **pos)
 	}
 }
 
-t_tetrimino_pattern *ft_pattern_recognition(const t_tetrimino_pattern *patterns, unsigned int pos[NB_BLOCKS][2])
+t_tetrimino_pattern *ft_pattern_recognition(int pos[NB_BLOCKS][2])
 {
 	int block;
 	int dim;
 	int is_equ;
-	
-	while (patterns != NULL)
+	t_tetrimino_pattern **pat;
+
+	pat = g_patterns;
+	if (pat == NULL)
+	{
+		printf("Les patterns de tetrimino n'ont pas ete initialises.\n");
+		return (NULL);
+	}
+	ft_pattern(pos);
+	while ((*pat) != NULL)
 	{
 		block = 0;
 		is_equ = 1;
@@ -122,15 +130,15 @@ t_tetrimino_pattern *ft_pattern_recognition(const t_tetrimino_pattern *patterns,
 			dim = 0;
 			while (is_equ && dim < 2)
 			{
-				if (pos[block][dim] != patterns->blocks_pos[block][dim])
+				if (pos[block][dim] != (*pat)->blocks_pos[block][dim])
 					is_equ = 0;
 				++dim;
 			}
 			++block;
 		}
 		if (is_equ)
-			return ((t_tetrimino_pattern*) patterns);
-		++patterns;
+			return ((t_tetrimino_pattern*) (*pat));
+		++pat;
 	}
 	return (NULL);
 }

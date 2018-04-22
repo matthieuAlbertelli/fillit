@@ -6,7 +6,7 @@
 /*   By: malberte <malberte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 19:02:13 by malberte          #+#    #+#             */
-/*   Updated: 2018/04/20 22:50:09 by malberte         ###   ########.fr       */
+/*   Updated: 2018/04/22 15:07:44 by malberte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 
 typedef struct 	s_tetrimino_pattern
 {
-	unsigned int	blocks_pos[NB_BLOCKS][2];
+	int	blocks_pos[NB_BLOCKS][2];
 //	int				is_vertical;
 	char			name[3];
 	int 			dim[2];
@@ -34,7 +34,7 @@ typedef struct 	s_tetrimino_pattern
 extern t_tetrimino_pattern **g_patterns;
 
 t_tetrimino_pattern **ft_read_patterns(const char *file);
-void ft_pattern(int **pos);
-t_tetrimino_pattern *ft_pattern_recognition(const t_tetrimino_pattern *patterns, unsigned int pos[NB_BLOCKS][2]);
+void ft_pattern(int pos[NB_BLOCKS][2]);
+t_tetrimino_pattern *ft_pattern_recognition(int pos[NB_BLOCKS][2]);
 
 #endif

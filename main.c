@@ -6,7 +6,7 @@
 /*   By: malberte <malberte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 21:10:38 by malberte          #+#    #+#             */
-/*   Updated: 2018/04/20 23:07:11 by malberte         ###   ########.fr       */
+/*   Updated: 2018/04/22 18:49:25 by malberte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,20 @@ int main(void)
 {
 	t_tetrimino **t;
 	int nb_tetri;
-	// int i;
+	int i;
+	
 	g_patterns = ft_read_patterns("tetriminos");
 	t = ft_read_tetriminos(&nb_tetri, "snoopdog");
+	if (t == NULL)
+	{
+		printf("error\n");
+		return (0);
+	}
+	while (*t)
+	{
+		printf("name=\"%s\"\n", (*t)->pattern->name);
+		++t;
+	}
 	// if (!t)
 	// 	return (0);
 	// while (*g_patterns)
