@@ -6,7 +6,7 @@
 /*   By: malberte <malberte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 14:43:38 by malberte          #+#    #+#             */
-/*   Updated: 2018/04/20 22:44:16 by malberte         ###   ########.fr       */
+/*   Updated: 2018/04/23 12:52:49 by malberte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "tetrimino_pattern.h"
 # define MAX_TETRIMINOS 26
 # define TETRIMINO_MAP_SIZE 20
+# define TETRIMINO_INPUT_SIZE 20
 
 typedef struct 	s_tetrimino
 {

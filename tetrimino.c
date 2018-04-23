@@ -6,7 +6,7 @@
 /*   By: malberte <malberte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 14:51:06 by malberte          #+#    #+#             */
-/*   Updated: 2018/04/22 18:52:47 by malberte         ###   ########.fr       */
+/*   Updated: 2018/04/23 17:15:37 by malberte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,48 +19,11 @@
 #include "libft/libft.h"
 #include "tetrimino.h"
 
-// void heap_permutation_it(t_tetrimino **A, size_t n)
+// static int		check_file_size(ssize_t bytes)
 // {
-// 	int c[n];
-// 	int i;
-// 	t_tetrimino *swap;
-
-// 	i = 0;
-// 	while (i < n)
-// 	{
-// 		c[i] = 0;
-// 		++i;
-// 	}
-
-// 	printf("%s\n", A);
-
-// 	i = 0;
-// 	while (i < n)
-// 	{
-// 		if (c[i] < i)
-// 		{
-// 			if (i % 2 == 0)
-// 			{
-// 				swap = A[0];
-// 				A[0] = A[i];
-// 				A[i] = swap;
-// 			}
-// 			else
-// 			{
-// 				swap = A[c[i]];
-// 				A[c[i]] = A[i];
-// 				A[i] = swap;
-// 			}
-// 			printf("%s\n", A);
-// 			++c[i];
-// 			i = 0;
-// 		}
-// 		else
-// 		{
-// 			c[i] = 0;
-// 			++i;
-// 		}
-// 	}
+// 	if (bytes < TETRIMINO_INPUT_SIZE)
+// 		return (0);
+// 	if (bytes )
 // }
 
 static char		*read_line(int pos[NB_BLOCKS][2], int *nb_blocks, const char *buf, int height)
@@ -130,6 +93,10 @@ static char		*read_tetrimino(t_tetrimino **new, int *nb_tetri, const char *buf)
 		// ++buf;
 	}
 	// buf++;
+	if (h != NB_BLOCKS)
+	{
+		return (NULL);
+	}
 	if (*buf == '\n')
 	{
 		buf++;
@@ -173,10 +140,10 @@ t_tetrimino 	**ft_read_tetriminos(int *nb_tetri, const char *filename)
 		return (NULL);
 	ft_bzero(buf, BUF_SIZE);
 	bytes = read(fd, buf, BUF_SIZE - 1);
-	if (bytes == -1)
+	if (bytes == -1 || bytes == 0)
 		return (NULL);
 	close(fd);
-	tetri = (t_tetrimino**) ft_memalloc(sizeof(t_tetrimino*) * MAX_TETRIMINOS);
+	tetri = (t_tetrimino**) ft_memalloc(sizeof(t_tetrimino*) * (MAX_TETRIMINOS + 1));
 	if (tetri == NULL)
 	{
 		return (0);
