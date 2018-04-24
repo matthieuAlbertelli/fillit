@@ -6,7 +6,7 @@
 /*   By: malberte <malberte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/24 14:22:24 by malberte          #+#    #+#             */
-/*   Updated: 2018/04/24 18:07:11 by malberte         ###   ########.fr       */
+/*   Updated: 2018/04/25 01:20:54 by malberte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 
 //precondition: pos est libre
 int ft_fill_tetrimino(	t_tetris_board *board,
-						const int pos[2],
-						const int tetrimino_layout[NB_BLOCKS][2])
+						int pos[2],
+						int tetrimino_layout[NB_BLOCKS][2])
 {
 	int block;
 	int fill_pos[NB_BLOCKS][2];
@@ -39,8 +39,8 @@ int ft_fill_tetrimino(	t_tetris_board *board,
 	{
 		fill_pos[block][HEIGHT] = tetrimino_layout[block][HEIGHT] + offset[HEIGHT];
 		fill_pos[block][WIDTH] = tetrimino_layout[block][WIDTH] + offset[WIDTH];
-		if (fill_pos[block][HEIGHT] < 0 || fill_pos[block][HEIGHT] > board->size
-			|| fill_pos[block][WIDTH] < 0 || fill_pos[block][WIDTH] > board->size
+		if (fill_pos[block][HEIGHT] < 0 || fill_pos[block][HEIGHT] >= board->size
+			|| fill_pos[block][WIDTH] < 0 || fill_pos[block][WIDTH] >= board->size
 			|| board->board[fill_pos[block][HEIGHT]][fill_pos[block][WIDTH]] == UNAVAILABLE_SQUARE)
 			{
 				return (0);
@@ -50,7 +50,7 @@ int ft_fill_tetrimino(	t_tetris_board *board,
 	block = 0;
 	while (block < NB_BLOCKS)
 	{
-		board->board[fill_pos[block][HEIGHT]][fill_pos[block][WIDTH]] = AVAILABLE_SQUARE;
+		board->board[fill_pos[block][HEIGHT]][fill_pos[block][WIDTH]] = UNAVAILABLE_SQUARE;
 		++block;
 	}
 	return (1);
@@ -80,15 +80,15 @@ void ft_unblock_tetrimino(	t_tetris_board *board,
 		block = 0;
 		while (block < NB_BLOCKS)
 		{
-			board->board[unblock_pos[block][HEIGHT]][unblock_pos[block][WIDTH]] = UNAVAILABLE_SQUARE;
+			board->board[unblock_pos[block][HEIGHT]][unblock_pos[block][WIDTH]] = AVAILABLE_SQUARE;
 			++block;
 		}
 	}
 }
 
 int	ft_next_available_square(	int next_pos[2],
-								const t_tetrimino *tetrimino,
-								const t_tetris_board *board)
+								t_tetrimino *tetrimino,
+								t_tetris_board *board)
 {	
 	int h;
 	int w;
@@ -99,15 +99,19 @@ int	ft_next_available_square(	int next_pos[2],
 	next_pos[WIDTH] = 0;
 	h = tetrimino->pos[HEIGHT];
 	w = tetrimino->pos[WIDTH];
+	if (h == -1)
+		h = 0;
 	while (h < board->size)
 	{
+		w = 0;
 		while (w < board->size)
 		{
 			if (board->board[h][w] == AVAILABLE_SQUARE)
 			{
 				next_pos[HEIGHT] = h;
 				next_pos[WIDTH] = w;
-				return (1);
+				if (ft_fill_tetrimino(board, next_pos, tetrimino->pattern->blocks_pos))
+					return (1);
 			}
 			++w;
 		}
@@ -131,8 +135,8 @@ int ft_solve_fillit(t_tetris_board *board)
 	n = 0;
 	while (n > -1)
 	{
-		if (ft_next_available_square(next_pos, board->tetriminos[n], board)
-			&& ft_fill_tetrimino(board, next_pos, board->tetriminos[n]->pattern->blocks_pos))
+		if (ft_next_available_square(next_pos, board->tetriminos[n], board))
+			// && ft_fill_tetrimino(board, next_pos, board->tetriminos[n]->pattern->blocks_pos))
 		{
 			board->tetriminos[n]->pos[HEIGHT] = next_pos[HEIGHT];
 			board->tetriminos[n]->pos[WIDTH] = next_pos[WIDTH];
@@ -140,10 +144,13 @@ int ft_solve_fillit(t_tetris_board *board)
 		}
 		else
 		{
-			ft_unblock_tetrimino(board, board->tetriminos[n]->pos, board->tetriminos[n]->pattern->blocks_pos);
-			--n;
 			board->tetriminos[n]->pos[HEIGHT] = -1;
 			board->tetriminos[n]->pos[WIDTH] = 0;
+			--n;
+			if (n != -1)
+			{
+				ft_unblock_tetrimino(board, board->tetriminos[n]->pos, board->tetriminos[n]->pattern->blocks_pos);
+			}
 		}
 		if (n == board->nb_tetrimino)
 			return (1);
@@ -153,27 +160,38 @@ int ft_solve_fillit(t_tetris_board *board)
 
 void ft_print_solution(const t_tetris_board *board)
 {
-	int h;
-	// int w;
+	int i;
+	int block;
 	char solution[board->size + 1][board->size + 1];
+	int offset[2];
+	t_tetrimino_pattern *pattern;
 
-	h = 0;
-	while (h < board->size)
+	i = 0;
+	while (i < board->size)
 	{
-		ft_memset(solution[h], '.', board->size);
-		solution[h][board->size] = '\0';
-		++h;
+		ft_memset(solution[i], '.', board->size);
+		solution[i][board->size] = '\0';
+		++i;
 	}
-	h = 0;
-	while (h < board->nb_tetrimino)
+	i = 0;
+	while (i < board->nb_tetrimino)
 	{
-		solution[board->tetriminos[h]->pos[HEIGHT]][board->tetriminos[h]->pos[WIDTH]] = 'A' + h;
-		++h;
+		offset[HEIGHT] = board->tetriminos[i]->pos[HEIGHT] - board->tetriminos[i]->pattern->blocks_pos[HEIGHEST_BLOCK][HEIGHT];
+		offset[WIDTH] = board->tetriminos[i]->pos[WIDTH] - board->tetriminos[i]->pattern->blocks_pos[HEIGHEST_BLOCK][WIDTH];
+		solution[board->tetriminos[i]->pos[HEIGHT]][board->tetriminos[i]->pos[WIDTH]] = 'A' + i;
+		block = 1;
+		while (block < NB_BLOCKS)
+		{
+			pattern = board->tetriminos[i]->pattern;
+			solution[pattern->blocks_pos[block][HEIGHT] + offset[HEIGHT]][pattern->blocks_pos[block][WIDTH] + offset[WIDTH]] = 'A' + i;
+			++block;
+		}
+		++i;
 	}
-	h = 0;
-	while (h < board->size)
+	i = 0;
+	while (i < board->size)
 	{
-		printf("%s\n", solution[h]);
-		++h;
+		printf("%s\n", solution[i]);
+		++i;
 	}
 }

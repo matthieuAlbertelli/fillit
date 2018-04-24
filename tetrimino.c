@@ -6,7 +6,7 @@
 /*   By: malberte <malberte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 14:51:06 by malberte          #+#    #+#             */
-/*   Updated: 2018/04/24 18:05:14 by malberte         ###   ########.fr       */
+/*   Updated: 2018/04/24 18:32:06 by malberte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,8 @@ int	ft_read_tetriminos(t_tetrimino **tetri, int *nb_tetri, const char *filename)
 			//free(tetri); FONCTION DE DUSTRUCTION
 			return (0);
 		}
+		tetri[*nb_tetri]->pos[HEIGHT] = -1;
+		tetri[*nb_tetri]->pos[WIDTH] = 0;
 		++*nb_tetri;
 	}
 	return (1);

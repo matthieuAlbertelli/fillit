@@ -6,7 +6,7 @@
 /*   By: malberte <malberte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 21:10:38 by malberte          #+#    #+#             */
-/*   Updated: 2018/04/24 17:57:06 by malberte         ###   ########.fr       */
+/*   Updated: 2018/04/25 01:27:19 by malberte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,26 @@ int main(int argc, char **argv)
 	int i;
 	// int i;
 	(void)argc;
+	(void)argv;
 	
 	g_patterns = ft_read_patterns("tetriminos");
 	
-	ft_read_tetriminos(board.tetriminos, &(board.nb_tetrimino), argv[1]);
-	board.size = 3;
+	if (!ft_read_tetriminos(board.tetriminos, &(board.nb_tetrimino), "snoopdog.txt"))
+	{
+		printf("error\n");
+		return (0);
+	}
+	board.size = 7;
 	board.board = (char**)ft_memalloc(sizeof(char*) * MAX_TETRIMINOS * NB_BLOCKS);
 	i = 0;
 	while (i < MAX_TETRIMINOS * NB_BLOCKS)
 	{
 		board.board[i] = (char*)ft_memalloc(sizeof(char) * MAX_TETRIMINOS * NB_BLOCKS);
+		ft_memset(board.board[i], 1, MAX_TETRIMINOS * NB_BLOCKS);
 		++i;
 	}
 	ft_solve_fillit(&board);
+	ft_print_solution(&board);
 	// ft_memdel(board.board);
 	// if (t == NULL)
 	// {
