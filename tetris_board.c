@@ -6,10 +6,11 @@
 /*   By: malberte <malberte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/24 14:22:24 by malberte          #+#    #+#             */
-/*   Updated: 2018/04/24 17:22:37 by malberte         ###   ########.fr       */
+/*   Updated: 2018/04/24 17:35:19 by malberte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "libft/libft.h"
 #include "tetris_board.h"
 
@@ -92,7 +93,7 @@ int	ft_next_available_square(	int next_pos[2],
 	int h;
 	int w;
 	
-	if (next_pos == NULL || tetrimino->pos == NULL || board == NULL)
+	if (next_pos == NULL || tetrimino == NULL || board == NULL)
 		return (0);
 	next_pos[HEIGHT] = -1;
 	next_pos[WIDTH] = 0;
@@ -144,7 +145,10 @@ int ft_solve_fillit(t_tetris_board *board)
 			board->tetriminos[n].pos[HEIGHT] = -1;
 			board->tetriminos[n].pos[WIDTH] = 0;
 		}
+		if (n == board->nb_tetrimino)
+			return (1);
 	}
+	return (0);
 }
 
 void ft_print_solution(const t_tetris_board *board)

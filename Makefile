@@ -6,7 +6,7 @@
 #    By: malberte <malberte@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/03 22:08:39 by acoulomb          #+#    #+#              #
-#    Updated: 2018/04/23 18:50:19 by malberte         ###   ########.fr        #
+#    Updated: 2018/04/24 17:35:36 by malberte         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,9 +15,11 @@
 
 NAME = fillit
 
-SRC =	main.c \
+SRC =	\
+		main.c \
 		tetrimino.c \
-		tetrimino_pattern.c
+		tetrimino_pattern.c \
+		tetris_board.c
 
 OBJS = $(SRC:.c=.o)
 

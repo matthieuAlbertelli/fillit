@@ -6,7 +6,7 @@
 /*   By: malberte <malberte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 14:14:46 by malberte          #+#    #+#             */
-/*   Updated: 2018/04/24 16:53:36 by malberte         ###   ########.fr       */
+/*   Updated: 2018/04/24 17:31:53 by malberte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 typedef struct 	s_tetris_board
 {
 	char	**board;
-	size_t 	size;
+	int 	size;
 	t_tetrimino *tetriminos;
 	int nb_tetrimino;
 }				t_tetris_board;
