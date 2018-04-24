@@ -6,7 +6,7 @@
 /*   By: malberte <malberte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 21:10:38 by malberte          #+#    #+#             */
-/*   Updated: 2018/04/23 17:21:38 by malberte         ###   ########.fr       */
+/*   Updated: 2018/04/23 18:40:13 by malberte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,16 @@
 
 t_tetrimino_pattern **g_patterns;
 
-int main(void)
+int main(int argc, char **argv)
 {
 	t_tetrimino **t;
 	int nb_tetri;
-	int i;
+	// int i;
+	(void)argc;
 	
 	g_patterns = ft_read_patterns("tetriminos");
-	t = ft_read_tetriminos(&nb_tetri, "/dev/random");
+	
+	t = ft_read_tetriminos(&nb_tetri, argv[1]);
 	if (t == NULL)
 	{
 		printf("error\n");

@@ -1,14 +1,14 @@
-#******************************************************************************#
+# **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: acoulomb <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: malberte <malberte@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/03 22:08:39 by acoulomb          #+#    #+#              #
-#    Updated: 2018/04/23 17:51:24 by acoulomb         ###   ########.fr        #
+#    Updated: 2018/04/23 18:50:19 by malberte         ###   ########.fr        #
 #                                                                              #
-#******************************************************************************#
+# **************************************************************************** #
 
 .PHONY = re all clean fclean
 .SUFFIXES:
@@ -17,11 +17,7 @@ NAME = fillit
 
 SRC =	main.c \
 		tetrimino.c \
-		tetrimino.h \
-		tetrimino_pattern.c \
-		tetrimino_pattern.h \
-		tetriminos \
-		tetris_board.h
+		tetrimino_pattern.c
 
 OBJS = $(SRC:.c=.o)
 
@@ -46,4 +42,4 @@ fclean: clean
 re: fclean all
 
 g: fclean $(OBJS)
-	gcc $(FLAGS) -g $(NAME) $(OBJS) $(LIB)
+	gcc $(FLAGS) -g $(SRC) $(LIB)

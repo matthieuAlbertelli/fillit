@@ -6,7 +6,7 @@
 /*   By: malberte <malberte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 20:21:50 by malberte          #+#    #+#             */
-/*   Updated: 2018/04/22 15:06:02 by malberte         ###   ########.fr       */
+/*   Updated: 2018/04/23 18:33:18 by malberte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include <unistd.h>
 #include "./libft/libft.h"
 #include "tetrimino_pattern.h"
+
+#include <stdio.h>
 
 t_tetrimino_pattern **ft_read_patterns(const char *file)
 {
