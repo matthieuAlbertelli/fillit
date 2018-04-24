@@ -6,35 +6,47 @@
 /*   By: malberte <malberte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 21:10:38 by malberte          #+#    #+#             */
-/*   Updated: 2018/04/23 18:40:13 by malberte         ###   ########.fr       */
+/*   Updated: 2018/04/24 17:57:06 by malberte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
-#include "tetrimino.h"
+#include "libft/libft.h"
+#include "tetris_board.h"
 
 t_tetrimino_pattern **g_patterns;
 
 int main(int argc, char **argv)
 {
-	t_tetrimino **t;
-	int nb_tetri;
+	t_tetris_board board;
+
+	int i;
 	// int i;
 	(void)argc;
 	
 	g_patterns = ft_read_patterns("tetriminos");
 	
-	t = ft_read_tetriminos(&nb_tetri, argv[1]);
-	if (t == NULL)
+	ft_read_tetriminos(board.tetriminos, &(board.nb_tetrimino), argv[1]);
+	board.size = 3;
+	board.board = (char**)ft_memalloc(sizeof(char*) * MAX_TETRIMINOS * NB_BLOCKS);
+	i = 0;
+	while (i < MAX_TETRIMINOS * NB_BLOCKS)
 	{
-		printf("error\n");
-		return (0);
+		board.board[i] = (char*)ft_memalloc(sizeof(char) * MAX_TETRIMINOS * NB_BLOCKS);
+		++i;
 	}
-	while (*t)
-	{
-		printf("name=\"%s\"\n", (*t)->pattern->name);
-		++t;
-	}
+	ft_solve_fillit(&board);
+	// ft_memdel(board.board);
+	// if (t == NULL)
+	// {
+	// 	printf("error\n");
+	// 	return (0);
+	// }
+	// while (*t)
+	// {
+	// 	printf("name=\"%s\"\n", (*t)->pattern->name);
+	// 	++t;
+	// }
 	// if (!t)
 	// 	return (0);
 	// while (*g_patterns)
@@ -51,6 +63,6 @@ int main(int argc, char **argv)
 	// }
 	// char A[26] = "ABCDEFGHIJKLMNO";
 	// size_t n = 10;
-
+	
 	return (0);
 }

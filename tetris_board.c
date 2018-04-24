@@ -6,7 +6,7 @@
 /*   By: malberte <malberte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/24 14:22:24 by malberte          #+#    #+#             */
-/*   Updated: 2018/04/24 17:35:19 by malberte         ###   ########.fr       */
+/*   Updated: 2018/04/24 18:07:11 by malberte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,19 +131,19 @@ int ft_solve_fillit(t_tetris_board *board)
 	n = 0;
 	while (n > -1)
 	{
-		if (ft_next_available_square(next_pos, &(board->tetriminos[n]), board)
-			&& ft_fill_tetrimino(board, next_pos, board->tetriminos[n].pattern->blocks_pos))
+		if (ft_next_available_square(next_pos, board->tetriminos[n], board)
+			&& ft_fill_tetrimino(board, next_pos, board->tetriminos[n]->pattern->blocks_pos))
 		{
-			board->tetriminos[n].pos[HEIGHT] = next_pos[HEIGHT];
-			board->tetriminos[n].pos[WIDTH] = next_pos[WIDTH];
+			board->tetriminos[n]->pos[HEIGHT] = next_pos[HEIGHT];
+			board->tetriminos[n]->pos[WIDTH] = next_pos[WIDTH];
 			++n;
 		}
 		else
 		{
-			ft_unblock_tetrimino(board, board->tetriminos[n].pos, board->tetriminos[n].pattern->blocks_pos);
+			ft_unblock_tetrimino(board, board->tetriminos[n]->pos, board->tetriminos[n]->pattern->blocks_pos);
 			--n;
-			board->tetriminos[n].pos[HEIGHT] = -1;
-			board->tetriminos[n].pos[WIDTH] = 0;
+			board->tetriminos[n]->pos[HEIGHT] = -1;
+			board->tetriminos[n]->pos[WIDTH] = 0;
 		}
 		if (n == board->nb_tetrimino)
 			return (1);
@@ -167,7 +167,7 @@ void ft_print_solution(const t_tetris_board *board)
 	h = 0;
 	while (h < board->nb_tetrimino)
 	{
-		solution[board->tetriminos[h].pos[HEIGHT]][board->tetriminos[h].pos[WIDTH]] = 'A' + h;
+		solution[board->tetriminos[h]->pos[HEIGHT]][board->tetriminos[h]->pos[WIDTH]] = 'A' + h;
 		++h;
 	}
 	h = 0;

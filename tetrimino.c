@@ -6,7 +6,7 @@
 /*   By: malberte <malberte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 14:51:06 by malberte          #+#    #+#             */
-/*   Updated: 2018/04/23 17:15:37 by malberte         ###   ########.fr       */
+/*   Updated: 2018/04/24 18:05:14 by malberte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,9 +123,8 @@ static char		*read_tetrimino(t_tetrimino **new, int *nb_tetri, const char *buf)
 	return ((char*)buf);
 }
 
-t_tetrimino 	**ft_read_tetriminos(int *nb_tetri, const char *filename)
+int	ft_read_tetriminos(t_tetrimino **tetri, int *nb_tetri, const char *filename)
 {
-	t_tetrimino **tetri;
 	int fd;
 	char buf[BUF_SIZE];
 	char *pbuf;
@@ -137,17 +136,17 @@ t_tetrimino 	**ft_read_tetriminos(int *nb_tetri, const char *filename)
 	}
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
-		return (NULL);
+		return (0);
 	ft_bzero(buf, BUF_SIZE);
 	bytes = read(fd, buf, BUF_SIZE - 1);
 	if (bytes == -1 || bytes == 0)
-		return (NULL);
-	close(fd);
-	tetri = (t_tetrimino**) ft_memalloc(sizeof(t_tetrimino*) * (MAX_TETRIMINOS + 1));
-	if (tetri == NULL)
-	{
 		return (0);
-	}
+	close(fd);
+	// tetri = (t_tetrimino**) ft_memalloc(sizeof(t_tetrimino*) * (MAX_TETRIMINOS + 1));
+	// if (tetri == NULL)
+	// {
+	// 	return (0);
+	// }
 	pbuf = buf;
 	*nb_tetri = 0;
 	while (*pbuf)
@@ -156,15 +155,15 @@ t_tetrimino 	**ft_read_tetriminos(int *nb_tetri, const char *filename)
 		{
 			//free(tetri); FONCTION DE DESTRUCTION
 			*nb_tetri = 0;
-			return (NULL);
+			return (0);
 		}
 		pbuf = read_tetrimino(&(tetri[*nb_tetri]), nb_tetri, pbuf);
-		if (pbuf == NULL)
+		if (pbuf == 0)
 		{
 			//free(tetri); FONCTION DE DUSTRUCTION
-			return (NULL);
+			return (0);
 		}
 		++*nb_tetri;
 	}
-	return (tetri);
+	return (1);
 }
