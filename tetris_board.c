@@ -6,7 +6,7 @@
 /*   By: malberte <malberte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/24 14:22:24 by malberte          #+#    #+#             */
-/*   Updated: 2018/04/25 02:22:24 by malberte         ###   ########.fr       */
+/*   Updated: 2018/04/25 15:24:11 by malberte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ int	ft_next_available_square(	int next_pos[2],
 	
 // }
 
+
 int ft_solve_fillit(t_tetris_board *board)
 {
 	int n;
@@ -155,6 +156,9 @@ int ft_solve_fillit(t_tetris_board *board)
 		if (n == board->nb_tetrimino)
 			return (1);
 	}
+	board->size++;
+	if(ft_solve_fillit(board))
+		return (1);
 	return (0);
 }
 
@@ -194,4 +198,22 @@ void ft_print_solution(const t_tetris_board *board)
 		printf("%s\n", solution[i]);
 		++i;
 	}
+}
+
+int ft_board_size(int nb_tetrimino)
+{
+	int board_size;
+	int i;
+
+	board_size = nb_tetrimino * NB_BLOCKS;
+	if (board_size <= 0)
+		return (0);
+	i = 1;
+	while (board_size >= (i * i))
+	{
+		if (board_size == (i * i))
+			return (i);
+		i++;
+	}
+	return (i);
 }

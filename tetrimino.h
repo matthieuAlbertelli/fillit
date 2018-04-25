@@ -6,7 +6,7 @@
 /*   By: malberte <malberte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 14:43:38 by malberte          #+#    #+#             */
-/*   Updated: 2018/04/24 17:56:24 by malberte         ###   ########.fr       */
+/*   Updated: 2018/04/25 15:50:11 by malberte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,4 @@ typedef struct 	s_tetrimino
 
 int	ft_read_tetriminos(t_tetrimino **tetri, int *nb_tetri, const char *filename);
 
-# endif
+#endif

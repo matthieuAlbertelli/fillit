@@ -6,7 +6,7 @@
 /*   By: malberte <malberte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 14:14:46 by malberte          #+#    #+#             */
-/*   Updated: 2018/04/25 01:19:39 by malberte         ###   ########.fr       */
+/*   Updated: 2018/04/25 14:21:57 by malberte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,6 @@ int	ft_next_available_square(	int next_pos[2],
 
 int ft_solve_fillit(t_tetris_board *board);
 void ft_print_solution(const t_tetris_board *board);
+int ft_board_size(int nb_tetrimino);
 							
 #endif
