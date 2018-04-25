@@ -6,7 +6,7 @@
 /*   By: malberte <malberte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/24 14:22:24 by malberte          #+#    #+#             */
-/*   Updated: 2018/04/25 01:20:54 by malberte         ###   ########.fr       */
+/*   Updated: 2018/04/25 02:22:24 by malberte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int ft_fill_tetrimino(	t_tetris_board *board,
 	int fill_pos[NB_BLOCKS][2];
 	int offset[2];
 
-	if (pos[HEIGHT] == -1)
+	if (pos[WIDTH] == -1)
 		return (0);
 	offset[HEIGHT] = pos[HEIGHT] - tetrimino_layout[HEIGHEST_BLOCK][HEIGHT];
 	offset[WIDTH] = pos[WIDTH] - tetrimino_layout[HEIGHEST_BLOCK][WIDTH];
@@ -64,7 +64,7 @@ void ft_unblock_tetrimino(	t_tetris_board *board,
 	int unblock_pos[NB_BLOCKS][2];
 	int offset[2];
 
-	if (pos[HEIGHT] != -1)
+	if (pos[WIDTH] != -1)
 	{
 		offset[HEIGHT] = pos[HEIGHT] - tetrimino_layout[HEIGHEST_BLOCK][HEIGHT];
 		offset[WIDTH] = pos[WIDTH] - tetrimino_layout[HEIGHEST_BLOCK][WIDTH];
@@ -95,15 +95,14 @@ int	ft_next_available_square(	int next_pos[2],
 	
 	if (next_pos == NULL || tetrimino == NULL || board == NULL)
 		return (0);
-	next_pos[HEIGHT] = -1;
-	next_pos[WIDTH] = 0;
+	next_pos[HEIGHT] = 0;
+	next_pos[WIDTH] = -1;
 	h = tetrimino->pos[HEIGHT];
-	w = tetrimino->pos[WIDTH];
-	if (h == -1)
-		h = 0;
+	w = tetrimino->pos[WIDTH] + 1;
+//	if (w == -1)
+//		w = 0;
 	while (h < board->size)
 	{
-		w = 0;
 		while (w < board->size)
 		{
 			if (board->board[h][w] == AVAILABLE_SQUARE)
@@ -116,6 +115,7 @@ int	ft_next_available_square(	int next_pos[2],
 			++w;
 		}
 		++h;
+		w = 0;
 	}
 	return (0);
 }
@@ -144,8 +144,8 @@ int ft_solve_fillit(t_tetris_board *board)
 		}
 		else
 		{
-			board->tetriminos[n]->pos[HEIGHT] = -1;
-			board->tetriminos[n]->pos[WIDTH] = 0;
+			board->tetriminos[n]->pos[HEIGHT] = 0;
+			board->tetriminos[n]->pos[WIDTH] = -1;
 			--n;
 			if (n != -1)
 			{

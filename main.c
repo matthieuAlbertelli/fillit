@@ -6,7 +6,7 @@
 /*   By: malberte <malberte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 21:10:38 by malberte          #+#    #+#             */
-/*   Updated: 2018/04/25 01:27:19 by malberte         ###   ########.fr       */
+/*   Updated: 2018/04/25 02:31:34 by malberte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int main(int argc, char **argv)
 		printf("error\n");
 		return (0);
 	}
-	board.size = 7;
+	board.size = 8;
 	board.board = (char**)ft_memalloc(sizeof(char*) * MAX_TETRIMINOS * NB_BLOCKS);
 	i = 0;
 	while (i < MAX_TETRIMINOS * NB_BLOCKS)
@@ -41,7 +41,11 @@ int main(int argc, char **argv)
 		ft_memset(board.board[i], 1, MAX_TETRIMINOS * NB_BLOCKS);
 		++i;
 	}
-	ft_solve_fillit(&board);
+	if (!ft_solve_fillit(&board))
+	{
+		printf("error\n");
+		return (0);
+	}
 	ft_print_solution(&board);
 	// ft_memdel(board.board);
 	// if (t == NULL)
