@@ -6,7 +6,7 @@
 /*   By: malberte <malberte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 14:14:46 by malberte          #+#    #+#             */
-/*   Updated: 2018/04/25 14:21:57 by malberte         ###   ########.fr       */
+/*   Updated: 2018/04/25 16:52:57 by malberte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,6 @@ typedef struct 	s_tetris_board
 	t_tetrimino *tetriminos[MAX_TETRIMINOS];
 	int nb_tetrimino;
 }				t_tetris_board;
-
-// typedef enum	e_option
-// {
-// 	PUT,
-// 	DELETE
-// }				t_option;
 
 int ft_fill_tetrimino(	t_tetris_board *board,
 						int pos[2],

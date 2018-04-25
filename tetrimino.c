@@ -6,11 +6,10 @@
 /*   By: malberte <malberte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 14:51:06 by malberte          #+#    #+#             */
-/*   Updated: 2018/04/25 02:10:42 by malberte         ###   ########.fr       */
+/*   Updated: 2018/04/25 16:53:44 by malberte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <fcntl.h>
 #include <sys/types.h>
 #include <sys/uio.h>
@@ -18,13 +17,6 @@
 
 #include "libft/libft.h"
 #include "tetrimino.h"
-
-// static int		check_file_size(ssize_t bytes)
-// {
-// 	if (bytes < TETRIMINO_INPUT_SIZE)
-// 		return (0);
-// 	if (bytes )
-// }
 
 static char		*read_line(int pos[NB_BLOCKS][2], int *nb_blocks, const char *buf, int height)
 {
@@ -47,27 +39,11 @@ static char		*read_line(int pos[NB_BLOCKS][2], int *nb_blocks, const char *buf, 
 			++*nb_blocks;
 		}
 		else if (buf[w] != '.')
-		{
-			printf("Un caractere autre qu'un '.' ou un '#' a ete trouve sur la ligne.\n");
 			return(NULL);
-		}
 		++w;
 	}
-	if (w < NB_BLOCKS)
-	{
-		printf("Moins de 4 caracteres ont ete trouves sur la ligne !\n%s\n", buf);
+	if (w < NB_BLOCKS || buf[w] != '\n')
 		return(NULL);
-	}
-	if (buf[w] != '\n')
-	{
-		printf("Apres 4 caracteres, il doit y avoir un retour chariot.\nEtat du buffer: %s\n", buf);
-		return (NULL);
-	}
-	// if (*nb_blocks == NB_BLOCKS)
-	// {
-	// 	printf("Plus de 4 '#' ont ete trouves.\n");
-	// 	return (NULL);
-	// }
 	++w;
 	return ((char *)(buf + w));
 }
@@ -102,16 +78,10 @@ static char		*read_tetrimino(t_tetrimino **new, int *nb_tetri, const char *buf)
 		buf++;
 	}
 	else if (*buf != '\0')
-	{
-		printf("Un tetrimino doit se finir soit par un retour chariot soit par la fin de fichier.\n");
 		return (NULL);
-	}
 	pat = ft_pattern_recognition(pos);
 	if (pat == NULL)
-	{
-		printf("Pattern non reconnu\n");
 		return (NULL);
-	}
 	*new = (t_tetrimino*)ft_memalloc(sizeof(t_tetrimino));
 	if (*new == NULL)
 	{
@@ -142,11 +112,6 @@ int	ft_read_tetriminos(t_tetrimino **tetri, int *nb_tetri, const char *filename)
 	if (bytes == -1 || bytes == 0)
 		return (0);
 	close(fd);
-	// tetri = (t_tetrimino**) ft_memalloc(sizeof(t_tetrimino*) * (MAX_TETRIMINOS + 1));
-	// if (tetri == NULL)
-	// {
-	// 	return (0);
-	// }
 	pbuf = buf;
 	*nb_tetri = 0;
 	while (*pbuf)

@@ -6,11 +6,10 @@
 /*   By: malberte <malberte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/24 14:22:24 by malberte          #+#    #+#             */
-/*   Updated: 2018/04/25 15:24:11 by malberte         ###   ########.fr       */
+/*   Updated: 2018/04/25 16:54:21 by malberte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "libft/libft.h"
 #include "tetris_board.h"
 
@@ -195,7 +194,8 @@ void ft_print_solution(const t_tetris_board *board)
 	i = 0;
 	while (i < board->size)
 	{
-		printf("%s\n", solution[i]);
+		ft_putstr(solution[i]);
+		ft_putchar('\n');
 		++i;
 	}
 }

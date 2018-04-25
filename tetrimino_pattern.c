@@ -6,18 +6,14 @@
 /*   By: malberte <malberte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 20:21:50 by malberte          #+#    #+#             */
-/*   Updated: 2018/04/23 18:33:18 by malberte         ###   ########.fr       */
+/*   Updated: 2018/04/25 16:57:32 by malberte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
-#include <sys/types.h>
-#include <sys/uio.h>
 #include <unistd.h>
 #include "./libft/libft.h"
 #include "tetrimino_pattern.h"
-
-#include <stdio.h>
 
 t_tetrimino_pattern **ft_read_patterns(const char *file)
 {
@@ -118,10 +114,7 @@ t_tetrimino_pattern *ft_pattern_recognition(int pos[NB_BLOCKS][2])
 
 	pat = g_patterns;
 	if (pat == NULL)
-	{
-		printf("Les patterns de tetrimino n'ont pas ete initialises.\n");
 		return (NULL);
-	}
 	ft_pattern(pos);
 	while ((*pat) != NULL)
 	{

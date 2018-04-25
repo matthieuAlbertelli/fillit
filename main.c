@@ -6,11 +6,10 @@
 /*   By: malberte <malberte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 21:10:38 by malberte          #+#    #+#             */
-/*   Updated: 2018/04/25 15:53:57 by malberte         ###   ########.fr       */
+/*   Updated: 2018/04/25 16:54:01 by malberte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "libft/libft.h"
 #include "tetris_board.h"
 
@@ -21,16 +20,18 @@ int main(int argc, char **argv)
 	t_tetris_board board;
 	int i;
 	
+	if (argc != 2)
+		return (0);
 	g_patterns = ft_read_patterns("tetriminos");
-	if (!ft_read_tetriminos(board.tetriminos, &(board.nb_tetrimino), "snoopdog.txt"))
+	if (!ft_read_tetriminos(board.tetriminos, &(board.nb_tetrimino), argv[1]))
 	{
-		printf("error\n");
+		ft_putstr("error\n");
 		return (0);
 	}
 	board.board = (char**)ft_memalloc(sizeof(char*) * MAX_TETRIMINOS * NB_BLOCKS);
 	if (board.board == NULL)
 	{
-		printf("error\n");
+		ft_putstr("error\n");
 		return (0);
 	}
 	board.size = ft_board_size(board.nb_tetrimino);
@@ -43,7 +44,7 @@ int main(int argc, char **argv)
 	}
 	if (!ft_solve_fillit(&board))
 	{
-		printf("error\n");
+		ft_putstr("error\n");
 		return (0);
 	}
 	ft_print_solution(&board);

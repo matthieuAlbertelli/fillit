@@ -55,3 +55,5 @@ dkms.conf
 # Aubane
 *~
 lssrc
+.vscode/*
+a.out.dSYM/*
