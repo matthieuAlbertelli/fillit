@@ -6,14 +6,12 @@
 /*   By: malberte <malberte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 19:02:13 by malberte          #+#    #+#             */
-/*   Updated: 2018/04/22 15:07:44 by malberte         ###   ########.fr       */
+/*   Updated: 2018/04/25 17:20:43 by malberte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TETRIMINOS_H
 # define TETRIMINOS_H
-
-#include <stdlib.h>
 
 # define HEIGHT 0
 # define WIDTH 1
@@ -26,7 +24,6 @@
 typedef struct 	s_tetrimino_pattern
 {
 	int	blocks_pos[NB_BLOCKS][2];
-//	int				is_vertical;
 	char			name[3];
 	int 			dim[2];
 }				t_tetrimino_pattern;

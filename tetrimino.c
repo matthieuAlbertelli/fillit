@@ -6,15 +6,12 @@
 /*   By: malberte <malberte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 14:51:06 by malberte          #+#    #+#             */
-/*   Updated: 2018/04/25 16:53:44 by malberte         ###   ########.fr       */
+/*   Updated: 2018/04/25 18:41:40 by malberte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
-#include <sys/types.h>
-#include <sys/uio.h>
 #include <unistd.h>
-
 #include "libft/libft.h"
 #include "tetrimino.h"
 
@@ -66,9 +63,7 @@ static char		*read_tetrimino(t_tetrimino **new, int *nb_tetri, const char *buf)
 			return (0);
 		}
 		h++;
-		// ++buf;
 	}
-	// buf++;
 	if (h != NB_BLOCKS)
 	{
 		return (NULL);
@@ -91,6 +86,19 @@ static char		*read_tetrimino(t_tetrimino **new, int *nb_tetri, const char *buf)
 	(*new)->pos[HEIGHT] = 0;
 	(*new)->pos[WIDTH] = 0;
 	return ((char*)buf);
+}
+
+void	ft_free_tetri(t_tetrimino **tetri, int *nb_tetri)
+{
+	int i;
+
+	i = 0;
+	while (i < *nb_tetri)
+	{
+		ft_memdel((void**)&(tetri[i]));
+		i++;
+	}
+	*nb_tetri = 0;
 }
 
 int	ft_read_tetriminos(t_tetrimino **tetri, int *nb_tetri, const char *filename)
@@ -118,14 +126,13 @@ int	ft_read_tetriminos(t_tetrimino **tetri, int *nb_tetri, const char *filename)
 	{
 		if (*nb_tetri == MAX_TETRIMINOS)
 		{
-			//free(tetri); FONCTION DE DESTRUCTION
-			*nb_tetri = 0;
+			ft_free_tetri(tetri, nb_tetri);
 			return (0);
 		}
 		pbuf = read_tetrimino(&(tetri[*nb_tetri]), nb_tetri, pbuf);
 		if (pbuf == 0)
 		{
-			//free(tetri); FONCTION DE DUSTRUCTION
+			ft_free_tetri(tetri, nb_tetri);
 			return (0);
 		}
 		tetri[*nb_tetri]->pos[HEIGHT] = 0;

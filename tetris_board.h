@@ -6,14 +6,13 @@
 /*   By: malberte <malberte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 14:14:46 by malberte          #+#    #+#             */
-/*   Updated: 2018/04/25 16:52:57 by malberte         ###   ########.fr       */
+/*   Updated: 2018/04/25 17:23:54 by malberte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TETRIS_BOARD_H
 # define TETRIS_BOARD_H
 
-# include <stdlib.h>
 # include "tetrimino.h"
 
 # define UNAVAILABLE_SQUARE 0
