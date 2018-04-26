@@ -20,7 +20,7 @@ SRC =	\
 		tetrimino.c \
 		tetrimino_pattern.c \
 		tetris_board.c \
-		safe_exit.c
+		clean.c
 
 OBJS = $(SRC:.c=.o)
 LIB = ./libft/libft.a

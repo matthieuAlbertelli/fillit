@@ -14,7 +14,7 @@
 #include <unistd.h>
 #include "./libft/libft.h"
 #include "tetrimino_pattern.h"
-#include "safe_exit.h"
+#include "clean.h"
 
 static char *file_to_str(char *dst, const char *filename)
 {
@@ -22,10 +22,10 @@ static char *file_to_str(char *dst, const char *filename)
 
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
-		ft_on_error(NULL, NULL);
+		ft_exit();
 	ft_bzero(dst, BUF_SIZE);
 	if (read(fd, dst, BUF_SIZE - 1) == -1)
-		ft_on_error(NULL, NULL);
+		ft_exit();
 	return (dst);
 }
 
@@ -35,9 +35,7 @@ static t_tetrimino_pattern **init_patterns_tab(unsigned int nb_patterns)
 	size_t tab_size;
 	
 	tab_size = sizeof(t_tetrimino_pattern *) * (nb_patterns + 1);
-	patterns = (t_tetrimino_pattern **)ft_memalloc(tab_size);
-	if (patterns == NULL)
-		ft_on_error(NULL, NULL);
+	patterns = (t_tetrimino_pattern **)ft_safe_alloc(tab_size);
 	return (patterns);
 }
 
@@ -45,9 +43,7 @@ static t_tetrimino_pattern *init_pattern()
 {
 	t_tetrimino_pattern *tetri;
 
-	tetri = (t_tetrimino_pattern *)ft_memalloc(sizeof(t_tetrimino_pattern));
-	if (tetri == NULL)
-		ft_on_error(NULL, NULL);
+	tetri = (t_tetrimino_pattern *)ft_safe_alloc(sizeof(t_tetrimino_pattern));
 	return (tetri);
 }
 
@@ -180,4 +176,20 @@ t_tetrimino_pattern *ft_pattern_recognition(int pos[NB_BLOCKS][2])
 		++pat;
 	}
 	return (NULL);
+}
+
+void ft_free_patterns()
+{
+	t_tetrimino_pattern **pat;
+
+	if (g_patterns != NULL)
+	{
+		pat = g_patterns;
+		while (*pat)
+		{
+			ft_memdel((void**)pat);
+			pat++;
+		}
+		ft_memdel((void**)&g_patterns);
+	}	
 }

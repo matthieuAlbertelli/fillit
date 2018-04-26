@@ -14,8 +14,9 @@
 #include <unistd.h>
 #include "libft/libft.h"
 #include "tetrimino.h"
+#include "clean.h"
 
-static char		*read_line(int pos[NB_BLOCKS][2], int *nb_blocks, const char *buf, int height)
+static char *read_line(int pos[NB_BLOCKS][2], int *nb_blocks, const char *buf, int height)
 {
 	int w;
 
@@ -24,28 +25,28 @@ static char		*read_line(int pos[NB_BLOCKS][2], int *nb_blocks, const char *buf, 
 	{
 		if (buf[w] == '#')
 		{
-			if(*nb_blocks < NB_BLOCKS)
+			if (*nb_blocks < NB_BLOCKS)
 			{
 				pos[*nb_blocks][HEIGHT] = height;
 				pos[*nb_blocks][WIDTH] = w;
 			}
-			else 
+			else
 			{
 				return (NULL);
 			}
 			++*nb_blocks;
 		}
 		else if (buf[w] != '.')
-			return(NULL);
+			return (NULL);
 		++w;
 	}
 	if (w < NB_BLOCKS || buf[w] != '\n')
-		return(NULL);
+		return (NULL);
 	++w;
 	return ((char *)(buf + w));
 }
 
-static char		*read_tetrimino(t_tetrimino **new, int *nb_tetri, const char *buf)
+static char *read_tetrimino(t_tetrimino **new, int *nb_tetri, const char *buf)
 {
 	int h;
 	int nb_blocks;
@@ -77,37 +78,37 @@ static char		*read_tetrimino(t_tetrimino **new, int *nb_tetri, const char *buf)
 	pat = ft_pattern_recognition(pos);
 	if (pat == NULL)
 		return (NULL);
-	*new = (t_tetrimino*)ft_memalloc(sizeof(t_tetrimino));
-	if (*new == NULL)
-	{
-		return (NULL);
-	}
+//	*new = (t_tetrimino *)ft_memalloc(sizeof(t_tetrimino));
+	*new = (t_tetrimino *)ft_safe_alloc(sizeof(t_tetrimino));
 	(*new)->pattern = pat;
 	(*new)->pos[HEIGHT] = 0;
 	(*new)->pos[WIDTH] = 0;
-	return ((char*)buf);
+	return ((char *)buf);
 }
 
-void	ft_free_tetri(t_tetrimino **tetri, int *nb_tetri)
+void ft_free_tetri(t_tetrimino **tetri, int *nb_tetri)
 {
 	int i;
 
 	i = 0;
-	while (i < *nb_tetri)
+	if (tetri != NULL)
 	{
-		ft_memdel((void**)&(tetri[i]));
-		i++;
+		while (i < *nb_tetri)
+		{
+			ft_memdel((void **)&(tetri[i]));
+			i++;
+		}
+		*nb_tetri = 0;
 	}
-	*nb_tetri = 0;
 }
 
-int	ft_read_tetriminos(t_tetrimino **tetri, int *nb_tetri, const char *filename)
+int ft_read_tetriminos(t_tetrimino **tetri, int *nb_tetri, const char *filename)
 {
 	int fd;
 	char buf[BUF_SIZE];
 	char *pbuf;
 	ssize_t bytes;
-	
+
 	if (nb_tetri == NULL)
 	{
 		return (0);

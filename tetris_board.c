@@ -17,9 +17,9 @@
 //en stockant les positions de remplissage depuis une fonction dediee.
 
 //precondition: pos est libre
-int ft_fill_tetrimino(	t_tetris_board *board,
-						int pos[2],
-						int tetrimino_layout[NB_BLOCKS][2])
+int ft_fill_tetrimino(t_tetris_board *board,
+					  int pos[2],
+					  int tetrimino_layout[NB_BLOCKS][2])
 {
 	int block;
 	int fill_pos[NB_BLOCKS][2];
@@ -38,12 +38,10 @@ int ft_fill_tetrimino(	t_tetris_board *board,
 	{
 		fill_pos[block][HEIGHT] = tetrimino_layout[block][HEIGHT] + offset[HEIGHT];
 		fill_pos[block][WIDTH] = tetrimino_layout[block][WIDTH] + offset[WIDTH];
-		if (fill_pos[block][HEIGHT] < 0 || fill_pos[block][HEIGHT] >= board->size
-			|| fill_pos[block][WIDTH] < 0 || fill_pos[block][WIDTH] >= board->size
-			|| board->board[fill_pos[block][HEIGHT]][fill_pos[block][WIDTH]] == UNAVAILABLE_SQUARE)
-			{
-				return (0);
-			}
+		if (fill_pos[block][HEIGHT] < 0 || fill_pos[block][HEIGHT] >= board->size || fill_pos[block][WIDTH] < 0 || fill_pos[block][WIDTH] >= board->size || board->board[fill_pos[block][HEIGHT]][fill_pos[block][WIDTH]] == UNAVAILABLE_SQUARE)
+		{
+			return (0);
+		}
 		++block;
 	}
 	block = 0;
@@ -55,9 +53,9 @@ int ft_fill_tetrimino(	t_tetris_board *board,
 	return (1);
 }
 
-void ft_unblock_tetrimino(	t_tetris_board *board,
-							const int pos[2],
-							const int tetrimino_layout[NB_BLOCKS][2])
+void ft_unblock_tetrimino(t_tetris_board *board,
+						  const int pos[2],
+						  const int tetrimino_layout[NB_BLOCKS][2])
 {
 	int block;
 	int unblock_pos[NB_BLOCKS][2];
@@ -85,21 +83,21 @@ void ft_unblock_tetrimino(	t_tetris_board *board,
 	}
 }
 
-int	ft_next_available_square(	int next_pos[2],
-								t_tetrimino *tetrimino,
-								t_tetris_board *board)
-{	
+int ft_next_available_square(int next_pos[2],
+							 t_tetrimino *tetrimino,
+							 t_tetris_board *board)
+{
 	int h;
 	int w;
-	
+
 	if (next_pos == NULL || tetrimino == NULL || board == NULL)
 		return (0);
 	next_pos[HEIGHT] = 0;
 	next_pos[WIDTH] = -1;
 	h = tetrimino->pos[HEIGHT];
 	w = tetrimino->pos[WIDTH] + 1;
-//	if (w == -1)
-//		w = 0;
+	//	if (w == -1)
+	//		w = 0;
 	while (h < board->size)
 	{
 		while (w < board->size)
@@ -147,7 +145,7 @@ int ft_solve_fillit(t_tetris_board *board)
 			return (1);
 	}
 	board->size++;
-	if(ft_solve_fillit(board))
+	if (ft_solve_fillit(board))
 		return (1);
 	return (0);
 }
@@ -211,14 +209,22 @@ int ft_board_size(int nb_tetrimino)
 
 void ft_free_tetris_board(t_tetris_board *tetris)
 {
+	ft_free_tetri(tetris->tetriminos, &(tetris->nb_tetrimino));
+	ft_free_grid(tetris->board);
+}
+
+void ft_free_grid(char **grid)
+{
 	int i;
 
-	ft_free_tetri(tetris->tetriminos, &(tetris->nb_tetrimino));
 	i = 0;
-	while (i < tetris->size)
+	if (grid != NULL)
 	{
-		ft_memdel((void**)&tetris->board[i]);
-		++i;
+		while (i < (MAX_TETRIMINOS * NB_BLOCKS * 2))
+		{
+			ft_memdel((void **)&grid[i]);
+			++i;
+		}
+		ft_memdel((void **)&grid);
 	}
-	ft_memdel((void**)&(tetris->board));
 }
