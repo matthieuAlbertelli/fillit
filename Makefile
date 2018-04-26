@@ -6,7 +6,7 @@
 #    By: malberte <malberte@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/03 22:08:39 by acoulomb          #+#    #+#              #
-#    Updated: 2018/04/25 19:17:36 by malberte         ###   ########.fr        #
+#    Updated: 2018/04/25 19:48:03 by malberte         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	@gcc $(FLAGS) -o $(NAME) $(OBJS) $(LIB)
 
-%.o : %.c %.h
+%.o : %.c
 	gcc $(FLAGS) -c $^
 
 clean:
@@ -42,5 +42,5 @@ fclean: clean
 
 re: fclean all
 
-g: fclean $(OBJS)
+g: re $(OBJS)
 	gcc $(FLAGS) -g $(SRC) $(LIB)

@@ -6,7 +6,7 @@
 /*   By: malberte <malberte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/24 14:22:24 by malberte          #+#    #+#             */
-/*   Updated: 2018/04/25 17:26:26 by malberte         ###   ########.fr       */
+/*   Updated: 2018/04/25 19:51:30 by malberte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,4 +207,18 @@ int ft_board_size(int nb_tetrimino)
 		i++;
 	}
 	return (i);
+}
+
+void ft_free_tetris_board(t_tetris_board *tetris)
+{
+	int i;
+
+	ft_free_tetri(tetris->tetriminos, &(tetris->nb_tetrimino));
+	i = 0;
+	while (i < tetris->size)
+	{
+		ft_memdel((void**)&tetris->board[i]);
+		++i;
+	}
+	ft_memdel((void**)&(tetris->board));
 }

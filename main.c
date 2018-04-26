@@ -6,7 +6,7 @@
 /*   By: malberte <malberte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 21:10:38 by malberte          #+#    #+#             */
-/*   Updated: 2018/04/25 17:17:23 by malberte         ###   ########.fr       */
+/*   Updated: 2018/04/25 19:54:48 by malberte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int main(int argc, char **argv)
 		ft_putstr("error\n");
 		return (0);
 	}
-	board.board = (char**)ft_memalloc(sizeof(char*) * MAX_TETRIMINOS * NB_BLOCKS);
+	board.board = (char**)ft_memalloc(sizeof(char*) * MAX_TETRIMINOS * NB_BLOCKS * 2);
 	if (board.board == NULL)
 	{
 		ft_putstr("error\n");
@@ -48,5 +48,6 @@ int main(int argc, char **argv)
 		return (0);
 	}
 	ft_print_solution(&board);
+	ft_free_tetris_board(&board);
 	return (0);
 }
