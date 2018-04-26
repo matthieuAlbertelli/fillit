@@ -15,17 +15,28 @@
 
 t_tetrimino_pattern **g_patterns;
 
+void	ft_usage(int ac)
+{
+	if (ac == 1)
+		ft_putstr("usage:\tfillit source_file\n\tno input file\n");
+	if (ac > 2)
+		ft_putstr("usage:\tfillit source_file\n\ttoo many input files\n");
+}
+
 int main(int argc, char **argv)
 {
 	t_tetris_board board;
 	int i;
 	
 	if (argc != 2)
+	{
+		ft_usage(argc);
 		return (0);
+	}
 	g_patterns = ft_read_patterns("tetriminos.txt");
 	if (!ft_read_tetriminos(board.tetriminos, &(board.nb_tetrimino), argv[1]))
 	{
-		ft_putstr("error\n");
+		ft_putstr("error\n\tunvalid file\n");
 		return (0);
 	}
 	board.board = (char**)ft_memalloc(sizeof(char*) * MAX_TETRIMINOS * NB_BLOCKS * 2);
@@ -44,6 +55,7 @@ int main(int argc, char **argv)
 	}
 	if (!ft_solve_fillit(&board))
 	{
+
 		ft_putstr("error\n");
 		return (0);
 	}
