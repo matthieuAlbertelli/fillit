@@ -6,7 +6,7 @@
 /*   By: malberte <malberte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 20:21:50 by malberte          #+#    #+#             */
-/*   Updated: 2018/04/26 09:19:29 by malberte         ###   ########.fr       */
+/*   Updated: 2018/04/26 09:24:42 by malberte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,7 @@ t_tetrimino_pattern **ft_read_patterns(const char *file)
 	int nb_block;
 
 	k = 0;
-	fd = open(file, O_RDONLY);
-	if (fd == -1)
-		return (NULL);
-	ft_bzero(str, BUF_SIZE);
-	if (read(fd, str, BUF_SIZE - 1) == -1)
-		return (NULL);
+	file_to_str(str, file);
 	size = ft_atoi(str);
 	if (!(patterns = (t_tetrimino_pattern **)ft_memalloc(sizeof(t_tetrimino_pattern *) * size + 1)))
 		return (NULL);
