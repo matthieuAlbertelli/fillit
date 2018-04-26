@@ -6,7 +6,7 @@
 /*   By: malberte <malberte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 21:10:38 by malberte          #+#    #+#             */
-/*   Updated: 2018/04/25 19:54:48 by malberte         ###   ########.fr       */
+/*   Updated: 2018/04/26 09:13:02 by malberte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ t_tetrimino_pattern **g_patterns;
 void	ft_usage(int ac)
 {
 	if (ac == 1)
-		ft_putstr("usage:\tfillit source_file\n\tno input file\n");
+		ft_putstr("usage:\t./fillit source_file\n\tno input file\n");
 	if (ac > 2)
-		ft_putstr("usage:\tfillit source_file\n\ttoo many input files\n");
+		ft_putstr("usage:\t./fillit source_file\n\ttoo many input files\n");
 }
 
 int main(int argc, char **argv)

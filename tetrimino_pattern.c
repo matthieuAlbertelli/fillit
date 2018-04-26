@@ -6,7 +6,7 @@
 /*   By: malberte <malberte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 20:21:50 by malberte          #+#    #+#             */
-/*   Updated: 2018/04/25 18:53:55 by malberte         ###   ########.fr       */
+/*   Updated: 2018/04/26 09:19:29 by malberte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,25 @@
 #include <unistd.h>
 #include "./libft/libft.h"
 #include "tetrimino_pattern.h"
+#include "safe_exit.h"
+
+static int file_to_str(char *dst, const char *filename)
+{
+	int fd;
+
+	fd = open(filename, O_RDONLY);
+	if (fd == -1)
+		return (0);
+	ft_bzero(dst, BUF_SIZE);
+	if (read(fd, dst, BUF_SIZE - 1) == -1)
+		return (0);
+	return (1);
+}
 
 t_tetrimino_pattern **ft_read_patterns(const char *file)
 {
 	t_tetrimino_pattern **patterns;
 	char str[BUF_SIZE];
-	int fd;
 	int k;
 	unsigned int size;
 	int h;
@@ -36,6 +49,7 @@ t_tetrimino_pattern **ft_read_patterns(const char *file)
 	size = ft_atoi(str);
 	if (!(patterns = (t_tetrimino_pattern **)ft_memalloc(sizeof(t_tetrimino_pattern *) * size + 1)))
 		return (NULL);
+		
 	patterns[size] = NULL;
 	k += 3;
 	while (str[k])
