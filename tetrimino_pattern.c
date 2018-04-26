@@ -49,7 +49,7 @@ t_tetrimino_pattern **ft_read_patterns(const char *file)
 	size = ft_atoi(str);
 	if (!(patterns = (t_tetrimino_pattern **)ft_memalloc(sizeof(t_tetrimino_pattern *) * size + 1)))
 		return (NULL);
-		
+		// initialisation de safe_memory pour le tab de pattern
 	patterns[size] = NULL;
 	k += 3;
 	while (str[k])
@@ -57,6 +57,7 @@ t_tetrimino_pattern **ft_read_patterns(const char *file)
 		--size;
 		if (!(patterns[size] = (t_tetrimino_pattern *)ft_memalloc(sizeof(t_tetrimino_pattern))))
 			return (NULL);
+		// initialisation de safe_memory pour chaque pattern ?
 		ft_strncpy(patterns[size]->name, str + k, 2);
 		k += 3;
 		patterns[size]->dim[HEIGHT] = ft_atoi(str + k);

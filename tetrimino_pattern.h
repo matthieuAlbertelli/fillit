@@ -11,21 +11,21 @@
 /* ************************************************************************** */
 
 #ifndef TETRIMINOS_H
-# define TETRIMINOS_H
+#define TETRIMINOS_H
 
-# define HEIGHT 0
-# define WIDTH 1
-# define HEIGHEST_BLOCK 0
-# define LEFTMOST_BLOCK 1
-# define NB_BLOCKS 4
-# define BLOCK_CHARACTER '#'
-# define BUF_SIZE 2000
+#define HEIGHT 0
+#define WIDTH 1
+#define HEIGHEST_BLOCK 0
+#define LEFTMOST_BLOCK 1
+#define NB_BLOCKS 4
+#define BLOCK_CHARACTER '#'
+#define BUF_SIZE 2000
 
-typedef struct 	s_tetrimino_pattern
+typedef struct	s_tetrimino_pattern
 {
-	int	blocks_pos[NB_BLOCKS][2];
-	char			name[3];
-	int 			dim[2];
+	int blocks_pos[NB_BLOCKS][2];
+	char name[3];
+	int dim[2];
 }				t_tetrimino_pattern;
 
 extern t_tetrimino_pattern **g_patterns;

@@ -27,22 +27,27 @@ int main(int argc, char **argv)
 {
 	t_tetris_board board;
 	int i;
+	int grid_size = MAX_TETRIMINOS * NB_BLOCKS * 2;
 	
+	plug((void*)board.tetriminos, &ft_free_tetris_board, &(board.nb_tetrimino));
 	if (argc != 2)
 	{
 		ft_usage(argc);
 		return (0);
 	}
+	plug((void*)&g_patterns, &ft_free_patterns, );
 	g_patterns = ft_read_patterns("tetriminos.txt");
+
 	if (!ft_read_tetriminos(board.tetriminos, &(board.nb_tetrimino), argv[1]))
 	{
-		ft_putstr("error\n");
+		ft_putstr(ERR_MSG);
 		return (0);
 	}
-	board.board = (char**)ft_memalloc(sizeof(char*) * MAX_TETRIMINOS * NB_BLOCKS * 2);
+	board.board = (char**)ft_memalloc(sizeof(char*) * grid_size);
+	plug((void*)board.board, &ft_free_grid, &grid_size);
 	if (board.board == NULL)
 	{
-		ft_putstr("error\n");
+		ft_putstr(ERR_MSG);
 		return (0);
 	}
 	board.size = ft_board_size(board.nb_tetrimino);
@@ -56,7 +61,7 @@ int main(int argc, char **argv)
 	if (!ft_solve_fillit(&board))
 	{
 
-		ft_putstr("error\n");
+		ft_putstr(ERR_MSG);
 		return (0);
 	}
 	ft_print_solution(&board);

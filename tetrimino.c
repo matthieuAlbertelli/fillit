@@ -14,6 +14,7 @@
 #include <unistd.h>
 #include "libft/libft.h"
 #include "tetrimino.h"
+#include "safe_exit.h"
 
 static char		*read_line(int pos[NB_BLOCKS][2], int *nb_blocks, const char *buf, int height)
 {
@@ -77,7 +78,8 @@ static char		*read_tetrimino(t_tetrimino **new, int *nb_tetri, const char *buf)
 	pat = ft_pattern_recognition(pos);
 	if (pat == NULL)
 		return (NULL);
-	*new = (t_tetrimino*)ft_memalloc(sizeof(t_tetrimino));
+	//*new = (t_tetrimino*)ft_memalloc(sizeof(t_tetrimino));
+	*new = (t_tetrimino*)ft_safe_malloc(1, sizeof(t_tetrimino), &ft_free_tetri);
 	if (*new == NULL)
 	{
 		return (NULL);
@@ -86,19 +88,6 @@ static char		*read_tetrimino(t_tetrimino **new, int *nb_tetri, const char *buf)
 	(*new)->pos[HEIGHT] = 0;
 	(*new)->pos[WIDTH] = 0;
 	return ((char*)buf);
-}
-
-void	ft_free_tetri(t_tetrimino **tetri, int *nb_tetri)
-{
-	int i;
-
-	i = 0;
-	while (i < *nb_tetri)
-	{
-		ft_memdel((void**)&(tetri[i]));
-		i++;
-	}
-	*nb_tetri = 0;
 }
 
 int	ft_read_tetriminos(t_tetrimino **tetri, int *nb_tetri, const char *filename)

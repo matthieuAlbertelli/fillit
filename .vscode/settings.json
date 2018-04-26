@@ -3,6 +3,7 @@
 		"libft.h": "c",
 		"types.h": "c",
 		"uio.h": "c",
-		"stdio.h": "c"
+		"stdio.h": "c",
+		"tetris_board.h": "c"
 	}
 }
