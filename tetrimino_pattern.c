@@ -6,7 +6,7 @@
 /*   By: malberte <malberte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 20:21:50 by malberte          #+#    #+#             */
-/*   Updated: 2018/04/26 13:22:49 by malberte         ###   ########.fr       */
+/*   Updated: 2018/04/26 18:34:20 by malberte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static char *file_to_str(char *dst, const char *filename)
 	ft_bzero(dst, BUF_SIZE);
 	if (read(fd, dst, BUF_SIZE - 1) == -1)
 		ft_on_error(NULL, NULL);
+	close(fd);
 	return (dst);
 }
 
