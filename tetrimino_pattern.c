@@ -6,7 +6,7 @@
 /*   By: malberte <malberte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 20:21:50 by malberte          #+#    #+#             */
-/*   Updated: 2018/04/26 09:24:42 by malberte         ###   ########.fr       */
+/*   Updated: 2018/04/26 13:22:49 by malberte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,67 @@
 #include "tetrimino_pattern.h"
 #include "safe_exit.h"
 
-static int file_to_str(char *dst, const char *filename)
+static char *file_to_str(char *dst, const char *filename)
 {
 	int fd;
 
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
-		return (0);
+		ft_on_error(NULL, NULL);
 	ft_bzero(dst, BUF_SIZE);
 	if (read(fd, dst, BUF_SIZE - 1) == -1)
-		return (0);
-	return (1);
+		ft_on_error(NULL, NULL);
+	return (dst);
+}
+
+static t_tetrimino_pattern **init_patterns_tab(unsigned int nb_patterns)
+{
+	t_tetrimino_pattern **patterns;
+	size_t tab_size;
+	
+	tab_size = sizeof(t_tetrimino_pattern *) * (nb_patterns + 1);
+	patterns = (t_tetrimino_pattern **)ft_memalloc(tab_size);
+	if (patterns == NULL)
+		ft_on_error(NULL, NULL);
+	return (patterns);
+}
+
+static t_tetrimino_pattern *init_pattern()
+{
+	t_tetrimino_pattern *tetri;
+
+	tetri = (t_tetrimino_pattern *)ft_memalloc(sizeof(t_tetrimino_pattern));
+	if (tetri == NULL)
+		ft_on_error(NULL, NULL);
+	return (tetri);
+}
+
+static int read_pattern_layout(t_tetrimino_pattern *pat, const char *src)
+{
+	int h;
+	int w;
+	int nb_block;
+	int src_i;
+
+	nb_block = 0;
+	h = -1;
+	src_i = 0;
+	while (++h < pat->dim[HEIGHT])
+	{
+		w = -1;
+		while (++w < pat->dim[WIDTH])
+		{
+			if (src[src_i] == '#')
+			{
+				pat->blocks_pos[nb_block][HEIGHT] = h;
+				pat->blocks_pos[nb_block][WIDTH] = w;
+				nb_block++;
+			}
+			src_i++;
+		}
+		src_i++;
+	}
+	return (src_i);
 }
 
 t_tetrimino_pattern **ft_read_patterns(const char *file)
@@ -34,84 +84,69 @@ t_tetrimino_pattern **ft_read_patterns(const char *file)
 	t_tetrimino_pattern **patterns;
 	char str[BUF_SIZE];
 	int k;
-	unsigned int size;
-	int h;
-	int w;
-	int nb_block;
+	unsigned int nb_pat;
 
 	k = 0;
 	file_to_str(str, file);
-	size = ft_atoi(str);
-	if (!(patterns = (t_tetrimino_pattern **)ft_memalloc(sizeof(t_tetrimino_pattern *) * size + 1)))
-		return (NULL);
-		
-	patterns[size] = NULL;
+	nb_pat = ft_atoi(str);
 	k += 3;
+	patterns = init_patterns_tab(nb_pat);
 	while (str[k])
 	{
-		--size;
-		if (!(patterns[size] = (t_tetrimino_pattern *)ft_memalloc(sizeof(t_tetrimino_pattern))))
-			return (NULL);
-		ft_strncpy(patterns[size]->name, str + k, 2);
+		--nb_pat;
+		patterns[nb_pat] = init_pattern();
+		ft_strncpy(patterns[nb_pat]->name, str + k, 2);
 		k += 3;
-		patterns[size]->dim[HEIGHT] = ft_atoi(str + k);
+		patterns[nb_pat]->dim[HEIGHT] = ft_atoi(str + k);
 		k += 2;
-		patterns[size]->dim[WIDTH] = ft_atoi(str + k);
+		patterns[nb_pat]->dim[WIDTH] = ft_atoi(str + k);
 		k += 2;
-		nb_block = 0;
-		h = -1;
-		while (++h < patterns[size]->dim[HEIGHT])
-		{
-			w = -1;
-			while (++w < patterns[size]->dim[WIDTH])
-			{
-				if (str[k] == '#')
-				{
-					patterns[size]->blocks_pos[nb_block][HEIGHT] = h;
-					patterns[size]->blocks_pos[nb_block][WIDTH] = w;
-					nb_block++;
-				}
-				k++;
-			}
-			k++;
-		}
+		k += read_pattern_layout(patterns[nb_pat], str + k);
 	}
 	return (patterns);
 }
 
-void ft_pattern(int pos[NB_BLOCKS][2])
+void ft_make_layout(int layout[NB_BLOCKS][2], int offset[2])
 {
 	int block;
 	int dimension;
-	int extra[2];
-
-	extra[HEIGHT] = pos[0][HEIGHT];
-	extra[WIDTH] = pos[0][WIDTH];
-	block = 1;
-	while (block < NB_BLOCKS)
-	{
-		dimension = 0;
-		while (dimension < 2)
-		{
-			if (extra[HEIGHT] > pos[block][HEIGHT])
-				 extra[HEIGHT] = pos[block][HEIGHT];
-			if (extra[WIDTH] > pos[block][WIDTH])
-				 extra[WIDTH] = pos[block][WIDTH];
-			++dimension;
-		}
-		++block;
-	}
+	
 	block = 0;
 	while (block < NB_BLOCKS)
 	{
 		dimension = 0;
 		while (dimension < 2)
 		{
-			pos[block][dimension] -= extra[dimension];
+			layout[block][dimension] -= offset[dimension];
 			++dimension;
 		}
 		++block;
 	}
+}
+
+void ft_coords_to_layout(int blocks_coords[NB_BLOCKS][2])
+{
+	int block;
+	int dimension;
+	int offset[2];
+
+	offset[HEIGHT] = blocks_coords[0][HEIGHT];
+	offset[WIDTH] = blocks_coords[0][WIDTH];
+	block = 1;
+	while (block < NB_BLOCKS)
+	{
+		dimension = 0;
+		while (dimension < 2)
+		{
+			if (offset[HEIGHT] > blocks_coords[block][HEIGHT])
+				 offset[HEIGHT] = blocks_coords[block][HEIGHT];
+			if (offset[WIDTH] > blocks_coords[block][WIDTH])
+				 offset[WIDTH] = blocks_coords[block][WIDTH];
+			++dimension;
+		}
+		++block;
+	}
+	ft_make_layout(blocks_coords, offset);
 }
 
 t_tetrimino_pattern *ft_pattern_recognition(int pos[NB_BLOCKS][2])
@@ -124,7 +159,7 @@ t_tetrimino_pattern *ft_pattern_recognition(int pos[NB_BLOCKS][2])
 	pat = g_patterns;
 	if (pat == NULL)
 		return (NULL);
-	ft_pattern(pos);
+	ft_coords_to_layout(pos);
 	while ((*pat) != NULL)
 	{
 		block = 0;
