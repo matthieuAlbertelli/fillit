@@ -36,7 +36,7 @@ int main(int argc, char **argv)
 	g_patterns = ft_read_patterns("tetriminos.txt");
 	if (!ft_read_tetriminos(board.tetriminos, &(board.nb_tetrimino), argv[1]))
 	{
-		ft_putstr("error\n\tunvalid file\n");
+		ft_putstr("error\n");
 		return (0);
 	}
 	board.board = (char**)ft_memalloc(sizeof(char*) * MAX_TETRIMINOS * NB_BLOCKS * 2);
