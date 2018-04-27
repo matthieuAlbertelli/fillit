@@ -6,7 +6,7 @@
 /*   By: malberte <malberte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 20:21:50 by malberte          #+#    #+#             */
-/*   Updated: 2018/04/26 18:34:20 by malberte         ###   ########.fr       */
+/*   Updated: 2018/04/27 03:05:03 by malberte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "tetrimino_pattern.h"
 #include "safe_exit.h"
 
-static char *file_to_str(char *dst, const char *filename)
+/*static char *file_to_str(char *dst, const char *filename)
 {
 	int fd;
 
@@ -29,7 +29,7 @@ static char *file_to_str(char *dst, const char *filename)
 	close(fd);
 	return (dst);
 }
-
+*/
 static t_tetrimino_pattern **init_patterns_tab(unsigned int nb_patterns)
 {
 	t_tetrimino_pattern **patterns;
@@ -80,15 +80,15 @@ static int read_pattern_layout(t_tetrimino_pattern *pat, const char *src)
 	return (src_i);
 }
 
-t_tetrimino_pattern **ft_read_patterns(const char *file)
+t_tetrimino_pattern **ft_read_patterns(const char *str)
 {
 	t_tetrimino_pattern **patterns;
-	char str[BUF_SIZE];
+//	char str[BUF_SIZE];
 	int k;
-	unsigned int nb_pat;
+	int nb_pat;
 
 	k = 0;
-	file_to_str(str, file);
+//	file_to_str(str, file);
 	nb_pat = ft_atoi(str);
 	k += 3;
 	patterns = init_patterns_tab(nb_pat);
